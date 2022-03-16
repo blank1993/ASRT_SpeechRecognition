@@ -8,11 +8,6 @@ ADD ./ /asrt_server
 
 WORKDIR /asrt_server
 
-# 最小化源，缩短apt update时间(ca-certificates必须先安装才支持换tsinghua源)
-RUN echo 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted' > /etc/apt/sources.list
-
-RUN apt update && apt install -y ca-certificates
-
 RUN echo $'\
 deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse\
 \n# deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse\n\
@@ -30,7 +25,7 @@ RUN apt update && apt install -y python3 python3-pip
 
 RUN pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
-RUN pip3 install wave scipy matplotlib tensorflow-cpu==2.5.2 numpy==1.19.2 requests
+RUN pip3 install wave scipy matplotlib tensorflow-aarch64==2.7.0 numpy==1.19.2 requests
 
 RUN echo $'cd /asrt_server \n python3 asrserver.py' > /asrt_server/start.sh && chmod +x /asrt_server/start.sh
 
